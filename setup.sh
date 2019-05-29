@@ -18,7 +18,7 @@ fi
 echo "Activating virtual environment"
 source $virtual_env_name/bin/activate
 
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 
 # python -m ipykernel install --user --name=${virtual_env_name}
 
