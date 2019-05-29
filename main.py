@@ -13,7 +13,6 @@ def get_coordinates_as_svy21(lat, lon):
 
 # load data
 coordinates = pd.read_csv('./data/input_coordinates.csv')
-limit = 250
 
 # call onemap api for conversion
 for i, coordinate in coordinates.iterrows():
@@ -24,11 +23,16 @@ for i, coordinate in coordinates.iterrows():
     coordinates.loc[i, 'X'] = result['X']
 
     # rate limit
+    limit = 250
     if i % limit == 0:
-        secs_to_sleep = 55
-        print(f'sleep for {secs_to_sleep} secs')
-        time.sleep(secs_to_sleep)
+        # UNCOMMENT THE NEXT 3 LINES IF WE NEED TO RATE LIMIT
+        # secs_to_sleep = 40
+        # print(f'sleep for {secs_to_sleep} secs')
+        # time.sleep(secs_to_sleep)
 
         # save checkpoint 
         _coordinates = coordinates.dropna()
         _coordinates.to_csv(f'./data/output_coordinates-checkpoint-{i}.csv', index=False)
+        
+
+coordinates.to_csv(f'./data/output_coordinates-final.csv', index=False)
